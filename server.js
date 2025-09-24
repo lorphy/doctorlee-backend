@@ -2,10 +2,12 @@ import express from 'express';
 import {mongoose} from 'mongoose';
 import Answer from './Answer.js';
 import Cors from 'cors';
+import crypto from 'crypto';
 
 const app= express();
 app.use(express.json());
 app.use(Cors());
+
 
 // 微信的登陆部分。 
 
@@ -24,8 +26,28 @@ app.get('/wx_login', function(req,res, next){
 	res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppID+'&redirect_uri='+return_uri+'&response_type=code&scope='+scope+'&state=STATE#wechat_redirect');
 	
 });
+
 app.get('/wx', function(req,res, next){
-	res.status(200).send('hello, this is handle view');
+	const data=req.query;
+	
+	if (data===undefined) res.status(200).send('hello, this is handle view');
+	let signature = data.signature;
+	let timestamp = data.timestamp;
+	let nonce = data.nonce;
+    let echostr = data.echostr;
+    let token = "for5zhangtest!";
+    
+    let tmp=token+timestamp+nonce;
+
+    
+    const aaa=unescape(encodeURIComponent(tmp));
+    const hashcode = crypto.createHash('sha1').update(aaa).digest('hex');
+    console.log(hashcode);
+	if (hashcode === signature) {res.status(200).send(echostr);}
+    else{        
+                console.log('微信Token校验失败');
+                res.status(200).send('');
+    }
 });
 
 app.get('/wx_login', function(req,res, next){
