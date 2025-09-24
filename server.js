@@ -18,7 +18,23 @@ app.get('/wx_login', function(req,res, next){
 	// 第一步：用户同意授权，获取code
 	var router = 'get_wx_access_token';
 	// 这是编码后的地址
-	var return_uri = 'doctorlee-backend.onrender.com';  
+	var return_uri = 'https://doctorlee-backend.onrender.com';  
+	var scope = 'snsapi_userinfo';
+	
+	res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppID+'&redirect_uri='+return_uri+'&response_type=code&scope='+scope+'&state=STATE#wechat_redirect');
+	
+});
+app.get('/wx', function(req,res, next){
+	res.status(200).send('hello, this is handle view');
+});
+
+app.get('/wx_login', function(req,res, next){
+	console.log("oauth - login")
+	
+	// 第一步：用户同意授权，获取code
+	var router = 'get_wx_access_token';
+	// 这是编码后的地址
+	var return_uri = 'https://doctorlee-backend.onrender.com';  
 	var scope = 'snsapi_userinfo';
 	
 	res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppID+'&redirect_uri='+return_uri+'&response_type=code&scope='+scope+'&state=STATE#wechat_redirect');
