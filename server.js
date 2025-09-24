@@ -46,7 +46,7 @@ app.get('/wx', function(req,res, next){
 	if (hashcode === signature) {res.status(200).send(echostr);}
     else{        
                 console.log('微信Token校验失败');
-                res.status(200).send('');
+                res.status(200).send({"token":data, "hashcode":hashcode});
     }
 });
 
