@@ -36,8 +36,9 @@ app.get('/wx', function(req,res, next){
 	let nonce = data.nonce;
     let echostr = data.echostr;
     let token = "for5zhangtest!";
-    
-    let tmp=token+timestamp+nonce;
+    var list = [token, timestamp, nonce];
+    list.sort();
+    let tmp=list.join('');
 
     
     const aaa=unescape(encodeURIComponent(tmp));
