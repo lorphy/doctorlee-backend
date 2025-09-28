@@ -35,7 +35,7 @@ app.get('/wx', function(req,res, next){
 	let timestamp = data.timestamp;
 	let nonce = data.nonce;
     let echostr = data.echostr;
-    let token = "for5zhangtest!";
+    let token = "for5zhangtest";
     var list = [token, timestamp, nonce];
     list.sort();
     let tmp=list.join('');
@@ -50,6 +50,7 @@ app.get('/wx', function(req,res, next){
                 res.status(200).send({"token":data, "hashcode":hashcode});
     }
 });
+
 
 app.get('/wx_login', function(req,res, next){
 	console.log("oauth - login")
