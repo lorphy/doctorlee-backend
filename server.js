@@ -4,6 +4,9 @@ import Answer from './Answer.js';
 import Cors from 'cors';
 import crypto from 'crypto';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app= express();
 app.use(express.json());
 app.use(Cors());
@@ -124,8 +127,20 @@ const uri = "mongodb+srv://lina:duuTmfCCz6DvF5pB@cluster0.tyj7k9i.mongodb.net/?r
 
 
 app.get("/",(req,res)=>{
+
+
 	res.status(200).send("Hello theweb");}
 );
+
+app.get("/:filename",(req,res)=>{
+	
+	const __filename = fileURLToPath(import.meta.url);
+
+	const __dirname = path.dirname(__filename);
+	
+	res.sendFile(`${__dirname}/${req.params.filename}`);
+
+});
 
 async function getOneByName(name){
 	try{
